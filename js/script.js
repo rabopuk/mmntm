@@ -31,7 +31,7 @@ function showDate() {
 
 
 
-// GREETING
+// GREETINGS
 
 const greeting = document.querySelector('.greeting');
 const nameInput = document.querySelector('.name');
@@ -63,14 +63,14 @@ function showGreeting() {
     let greetingText = '';
 
     if (language === 'en') {
-        greetingText = `Good ${getTimeOfDay()}`;
+        greetingText = `Good ${getTimeOfDay()}, `;
     } else {
         if (getTimeOfDay() === 'ночи,') {
-            greetingText = `Доброй ${getTimeOfDay()}`;
+            greetingText = `Доброй ${getTimeOfDay()}, `;
         } else if (getTimeOfDay() === 'утро,') {
-            greetingText = `Доброе ${getTimeOfDay()}`;
+            greetingText = `Доброе ${getTimeOfDay()}, `;
         } else
-            greetingText = `Добрый ${getTimeOfDay()}`;
+            greetingText = `Добрый ${getTimeOfDay()}, `;
     }
 
     nameInput.setAttribute('placeholder', placeHolder[language]);
@@ -127,7 +127,7 @@ async function getWeather() {
             if (nameCity == 0) {
                 city.textContent = defaultCity;
             } else {
-                city.textContent = localStorage.getItem('city');
+                city.textContent = nameCity;
             }
         } else {
             city.textContent = defaultCity;
@@ -186,9 +186,9 @@ function sendCity() {
     document.addEventListener('DOMContentLoaded', getWeather);
     city.addEventListener('keypress', setCity);
     document.addEventListener('click', (e) => {
-        const withinBondaries = e.composedPath().includes(city);
+        const withinBoundaries = e.composedPath().includes(city);
 
-        if (!withinBondaries) {
+        if (!withinBoundaries) {
             setLocalStorageCity();
             getWeather();
             city.blur();
@@ -217,7 +217,7 @@ const buttonChangeQuote = document.querySelector('.change-quote');
 
 
 function getRandomNum(max) {
-    return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max)
 };
 
 
@@ -226,7 +226,7 @@ function getQuotes() {
     fetch(quotes)
         .then(res => res.json())
         .then(data => {
-            let language = languages.textContent
+            let language = languages.textContent;
             textOfQuote.innerHTML = data[language][getRandomNum(data[language].length)].text;
             authorOfQuote.innerHTML = data[language][getRandomNum(data[language].length)].author;
         });
@@ -234,10 +234,71 @@ function getQuotes() {
 
 
 function changeQuotes() {
-    getQuotes()
+    getQuotes();
     buttonChangeQuote.addEventListener('click', getQuotes);
 };
 changeQuotes();
+
+
+
+
+// SLIDER
+
+const prevSlideButton = document.querySelector('.slide-prev');
+const nextSlideButton = document.querySelector('.slide-next');
+const img = new Image();
+
+
+function getRandomNumSlide(max) {
+    return Math.floor(Math.random() * max + 1)
+};
+
+
+let randomNumGlobal = getRandomNumSlide(20);
+
+
+function showPartOfDay() {
+    const timeOfDay = ['night', 'morning', 'afternoon', 'evening'];
+    const currentDate = new Date();
+    const hours = currentDate.getHours();
+    return timeOfDay[Math.floor(hours / 6)];
+};
+
+
+function BackgroundSlider() {
+    function getSliderNumber(randomNumGlobal) {
+        let randomNum = randomNumGlobal;
+        return randomNum
+    };
+
+
+    prevSlideButton.addEventListener('click', getSlidePrev);
+    nextSlideButton.addEventListener('click', getSlideNext);
+
+    function getSlidePrev() {
+        (randomNumGlobal == 1) ? randomNumGlobal = 20 : randomNumGlobal--;
+        getSliderNumber(randomNumGlobal);
+        setBG();
+    };
+
+
+    function getSlideNext() {
+        (randomNumGlobal == 20) ? randomNumGlobal = 1 : randomNumGlobal++;
+        getSliderNumber(randomNumGlobal);
+        setBG();
+    };
+
+
+    function setBG() {
+        let random = (String(getSliderNumber(randomNumGlobal))).padStart(2, "0");
+        img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${showPartOfDay()}/${random}.jpg`;
+        img.onload = () => {
+            body.style.backgroundImage = `url(${img.src})`;
+        };
+    };
+
+    setBG();
+};
 
 
 

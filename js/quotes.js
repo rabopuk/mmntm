@@ -10,7 +10,7 @@ function getRandomNum(max) {
 
 
 function getQuotes() {
-    const quotes = '/momentum/data.json';
+    const quotes = 'data.json';
     fetch(quotes)
         .then(res => res.json())
         .then(data => {
