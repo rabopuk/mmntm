@@ -1,12 +1,12 @@
 let languages = document.querySelector('.language');
 
 
-function setWidjets() {
+function setWidgets() {
     let language = languages.textContent;
-    let defaultActiveWidjets = ['Player', 'Time', 'Date', 'Weather', 'Greeting'];
-    for (let i = 0; i < defaultActiveWidjets.length; i++) {
-        if (!localStorage.getItem(defaultActiveWidjets[i])) {
-            localStorage.setItem(defaultActiveWidjets[i], 'true');
+    let defaultActiveWidgets = ['Player', 'Time', 'Date', 'Weather', 'Greeting'];
+    for (let i = 0; i < defaultActiveWidgets.length; i++) {
+        if (!localStorage.getItem(defaultActiveWidgets[i])) {
+            localStorage.setItem(defaultActiveWidgets[i], 'true');
         }
     }
 };
@@ -14,5 +14,5 @@ function setWidjets() {
 
 function initSettings() {
     let isOpen = 'false';
-    setWidjets();
+    setWidgets();
 };
