@@ -266,7 +266,7 @@ function showPartOfDay() {
 
 
 function BackgroundSlider() {
-    function getSliderNumber(randomNumGlobal) {
+    function getSlideNumber(randomNumGlobal) {
         let randomNum = randomNumGlobal;
         return randomNum
     };
@@ -275,31 +275,30 @@ function BackgroundSlider() {
     prevSlideButton.addEventListener('click', getSlidePrev);
     nextSlideButton.addEventListener('click', getSlideNext);
 
+
     function getSlidePrev() {
-        (randomNumGlobal == 1) ? randomNumGlobal = 20 : randomNumGlobal--;
-        getSliderNumber(randomNumGlobal);
+        (randomNumGlobal === 1) ? randomNumGlobal = 20 : randomNumGlobal--;
+        getSlideNumber(randomNumGlobal);
         setBG();
     };
 
 
     function getSlideNext() {
-        (randomNumGlobal == 20) ? randomNumGlobal = 1 : randomNumGlobal++;
-        getSliderNumber(randomNumGlobal);
+        (randomNumGlobal === 20) ? randomNumGlobal = 1 : randomNumGlobal++;
+        getSlideNumber(randomNumGlobal);
         setBG();
     };
 
 
     function setBG() {
-        let random = (String(getSliderNumber(randomNumGlobal))).padStart(2, "0");
+        let random = (String(getSlideNumber(randomNumGlobal))).padStart(2, "0");
         img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${showPartOfDay()}/${random}.jpg`;
         img.onload = () => {
             body.style.backgroundImage = `url(${img.src})`;
         };
     };
-
     setBG();
 };
-
 
 
 
@@ -319,5 +318,6 @@ function showTime() {
 
     showDate();
     showGreeting();
+    BackgroundSlider();
 };
 showTime();
